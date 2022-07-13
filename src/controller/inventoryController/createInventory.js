@@ -4,7 +4,7 @@ const Inventory = require('../../models/inventorySchema')
 const createInventory = async(req, res) => {
 try {
     let {body} = req
-    console.log(body)
+    // console.log(body)
     const {error, value} = validateInventorySchema(body)
     if(error){
          return res.status(400).json({error:{message: error.details[0].message}})
@@ -18,6 +18,7 @@ try {
     
 } catch (error) {
      res.status(500).json(error)
+     console.log(error)
 }
 }
 module.exports = createInventory

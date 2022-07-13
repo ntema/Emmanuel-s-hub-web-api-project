@@ -20,17 +20,12 @@ const inventorySchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
-    role:{
-        type:String,
-        enum:['user','admin'],
-        default:'user'
-    }
 },{
     timestamps:true
 })
 
 const populateUser = function (next){
-    inventorySchema.populate('addedBy', '_id firstname email')
+    this.populate('addedBy', '_id firstname email')
     next()
 }
 inventorySchema.pre('find', populateUser).pre('findOne', populateUser).pre('findOneAndUpdate', populateUser)
