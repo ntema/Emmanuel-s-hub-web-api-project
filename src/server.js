@@ -34,7 +34,7 @@ app.use('/api/user', require('./routes/userRoutes/getAllUser'))
 app.use('/api/user', require('./routes/userRoutes/getSingleUser'))
 app.use('/api/user', require('./routes/userRoutes/updateUser'))
 app.use('/api/user', require('./routes/userRoutes/deleteUser'))
-app.use('/api/cart', require('./routes/cartRoute/addCartRoute'))
+app.use('/api/cart', require('./routes/cartRoutes/addCartRoute'))
 
 app.use("*", (req, res) => {
     return res.status(404).json({ error: { messgage: "Route Not Found" } });

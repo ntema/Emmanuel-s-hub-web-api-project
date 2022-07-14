@@ -9,7 +9,7 @@ try {
     if(error){
          return res.status(400).json({error:{message: error.details[0].message}})
     }
-    const inventoryExist = await Inventory.findOne({name:body.name})
+    const inventoryExist = await Inventory.findOne({id:body._id})
     if(inventoryExist){
         return res.status(400).json({error:{message:`Hey!! inventory with name ${body.name} already exist`}})
     }

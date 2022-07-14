@@ -18,9 +18,10 @@ const loginController = async(req, res) => {
          return res.status(400).json({error:{message: error.details[0].message}})
     }
     const user = await User.findOne({email:body.email}).select('+password')
+    console.log(user.role)
     const isPassword = await bcrypt.compare(user.password,body.password)
     
-    const token = jwt.sign({_id:user._id},tokenSecret, {expiresIn:'30d'})
+    const token = jwt.sign({_id:user._id, role:user.role},tokenSecret, {expiresIn:'30d'})
 
        return res.status(200).json({message:"Login Successful",id:user._id, token})
    } catch (error) {

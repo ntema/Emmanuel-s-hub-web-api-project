@@ -1,7 +1,6 @@
 const User = require("../../models/userSchema");
 const Inventory = require("../../models/inventorySchema");
 const Joi = require("joi");
-const addProductService = require("../../services/productsServices/addProductService");
 
 const Schema = new Joi.object({
   quantity: Joi.number().required(),
@@ -13,7 +12,6 @@ module.exports = async (req, res) => {
     const { error, value } = Schema.validate(body);
     console.log(error);
     if (error) {
-      // return res.json(error);
       return res.json({ error: { message: error.details[0].message } });
     }
     const by = req.user._id;
@@ -24,7 +22,6 @@ module.exports = async (req, res) => {
       {
         $push: { cart: { product: value.quantity} },
         $inc: {
-          // "reviewCounts.totalRating": value.rating,
           "cart.quantity": 1,
         },
       },
@@ -35,18 +32,14 @@ module.exports = async (req, res) => {
         { _id: prodId },
         {
           $pull: { quantity: { quantity: value.quantity } },
-          // $inc: {
-          //   "reviewCounts.totalRating": value.rating,
-          //   "reviewCounts.numberOfRatings": 1,
-          // },
         },
         { new: true }
       );
-      return res.status(201).json(inventory);
+      
     }
     
     // console.log(product);
-    return res.status(201).json(user);
+    return res.status(201).json({cartItem: user.cart});
   } catch (error) {
     return res.status(500).json({ error: { message: error } });
   }
